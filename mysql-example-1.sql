@@ -116,3 +116,59 @@ SELECT department, MAX(salary) FROM worker GROUP BY department;
 -- Q: Find all the departments where more than 2 employees work.
 SELECT department, COUNT(department) FROM worker GROUP BY department HAVING COUNT(department) > 3;
 
+
+
+
+-- DDL (DATA DEFINATION LANGUAGE)
+
+CREATE DATABASE DDL;
+
+USE DDL;
+
+-- PRIMARY KEY
+CREATE TABLE customer(
+	id INT PRIMARY KEY,
+    first_name CHAR(20),
+    last_name CHAR(20),
+    address VARCHAR(100)
+);
+
+-- FOREIGN KEY
+CREATE TABLE order_details(
+	order_id INT PRIMARY KEY,
+    product_name CHAR(50),
+    product_category CHAR(50),
+    amount INT,
+    cust_id INT,
+    FOREIGN KEY(cust_id) REFERENCES customer(id)
+);
+
+-- CONSTRAINTS AND DEFAULT 
+CREATE TABLE user_details(
+	id INT PRIMARY KEY,
+    username CHAR(10) DEFAULT 'DON_',
+    first_name CHAR(10),
+    last_name CHAR(10),
+	balance INT,
+    CONSTRAINT acc_balance_check CHECK(balance > 100)
+);
+
+INSERT INTO user_details(id, first_name, last_name, balance) VALUES(1, 'a', 'b', 101);
+
+SELECT * FROM user_details;
+DESC user_details;
+
+-- ADD - New column
+ALTER TABLE user_details ADD interest FLOAT NOT NULL DEFAULT 6;
+
+-- MODIFY - Change the datatype of a column
+ALTER TABLE user_details MODIFY interest DOUBLE NOT NULL DEFAULT 0;
+
+-- CHANGE COLUMN - Rename the column name
+ALTER TABLE user_details CHANGE COLUMN interest saving_interest FLOAT NOT NULL DEFAULT 2;
+
+-- DROP COLUMN - Delete a column
+ALTER TABLE user_details DROP COLUMN saving_interest;
+
+-- RENAME TABLE NAME
+ALTER TABLE user_details RENAME TO user_information;

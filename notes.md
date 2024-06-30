@@ -81,7 +81,7 @@
 
 ## SQL Commands (syntax)
 
-### DRL (data retrieval language)
+### DRL (DATA RETRIEVAL LANGUAGE)
 
     1. SELECT <set of column names> FROM <table_name>;
 
@@ -170,3 +170,65 @@
            HAVING filters on the groups made by GROUP BY.
         3. Eg: Ques: Find all the departments where more than 2 employees work.
            - SELECT department, COUNT(department) FROM worker GROUP BY department HAVING COUNT(department) > 3;
+
+### DDL (DATA DEFINATION LANGUAGE)
+
+    1. Constraints
+
+        1. Primary Key
+            - unique
+            - not null
+            - only one in a table
+            - good practice to have int as PK.
+            - Eg: CREATE TABLE customer(
+                    id INT PRIMARY KEY,
+                    branch_id INT,
+                    first_name char(20),
+                    last_name char(20),
+                    dob DATE,
+                    gender char(6)
+                );
+
+        2. Foreign Key
+            - FK refers to PK of other table.
+            - Each relation can have any number of FK.
+            - Eg: CREATE TABLE orders(
+                    order_id INT PRIMARY KEY,
+                    delivery_date DATE,
+                    order_placed_date DATE,
+                    cust_id INT,
+                    FOREIGN KEY(cust_id) REFERENCES customer(id)
+                );
+
+        3. Unique
+            - Can be null.
+            - Table can have multiple unique attributes.
+            - Eg: CREATE TABLE customer(
+                    ...
+                    email VARCHAR(100) UNIQUE,
+                    ...
+                );
+        4. Check
+            - Consistency constraint.
+            - Eg: CREATE TABLE customer(
+                    ...
+                    age INT,
+                    CONSTRAINT age_check CHECK (age > 12),
+                    ...
+                );
+    2. ALTER
+
+        1. ADD - New column
+            ALTER TABLE user_details ADD interest FLOAT NOT NULL DEFAULT 6;
+
+        2. MODIFY - Change the datatype of a column
+            ALTER TABLE user_details MODIFY interest DOUBLE NOT NULL DEFAULT 0;
+
+        3. CHANGE COLUMN - Rename the column name
+            ALTER TABLE user_details CHANGE COLUMN interest saving_interest FLOAT NOT NULL DEFAULT 2;
+
+        4. DROP COLUMN - Delete a column
+            ALTER TABLE user_details DROP COLUMN saving_interest;
+
+        5. RENAME TABLE NAME
+            ALTER TABLE user_details RENAME TO user_information;
